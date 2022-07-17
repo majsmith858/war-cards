@@ -100,7 +100,7 @@ def play_game(request, player_1_deck, player_2_deck):
     player_1_draw = draw_card(player_1_deck)
     player_2_draw = draw_card(player_2_deck)
         
-    if not (player_1_draw or player_1_draw):
+    if not player_1_draw or not player_1_draw:
         game_over=True
         winner = get_winner(players)
 
