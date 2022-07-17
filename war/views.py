@@ -19,3 +19,50 @@ def generate_deck(request):
     player_2_cards = get_new_deck()
     
     return HttpResponseRedirect(reverse("play-game", args=[player_1_cards,player_2_cards]))
+
+def get_digit_value(value):
+    """
+    This function converts the value of Jack, Queen, King and Ace to the digit weighting
+    :param value: The value to be converted to a digit
+    """
+    if value == 'JACK':
+        value=11
+    elif value == "QUEEN":
+        value=12
+    elif value == "KING":
+        value=13
+    elif value == "ACE":
+        value=14
+    return value
+
+def save_score(identity):
+    """
+    This function saves the score of the player.
+    
+    :param identity: The identity of the player
+    """
+    player = Player.objects.get(identity=identity)
+    player.score += 1
+    player.save()
+
+def calculate_score(request,player_1_deck, player_2_deck, player_1_card, player_2_card):
+    """
+    This function calculates the score for each players
+    
+    :param request: the request object
+    :param player_1_deck: The deck of the first player
+    :param player_2_deck: The deck of the second player
+    :param player_1_card: The card that player 1 played
+    :param player_2_card: The card that player 2 played
+    """
+    value_1=get_digit_value(player_1_card)
+    value_2=get_digit_value(player_2_card)
+    
+    if int(value_1) > int(value_2):
+        identity="Player 1"
+        save_score(identity)
+    elif int(value_2) > int(value_1):
+        identity="Player 2"
+        save_score(identity)
+        
+    return HttpResponseRedirect(reverse("play-game", args=[player_1_deck,player_2_deck]))
