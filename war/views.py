@@ -15,6 +15,7 @@ def generate_deck(request):
     
     :param request: The request object
     """
+    clear_score(request) #reset scores
     player_1_cards = get_new_deck()
     player_2_cards = get_new_deck()
     
