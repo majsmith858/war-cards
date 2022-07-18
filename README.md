@@ -20,9 +20,9 @@ $ python3 manage.py makemigrations
 # Run the app
 $ python3 manage.py runserver
 
-#Visit the following link
-[http://127.0.0.1:8000/war/](http://127.0.0.1:8000/war/)
 ```
+### Visit the following link
+[http://127.0.0.1:8000/war/](http://127.0.0.1:8000/war/)
 ## Credits
 -TBD
 ## Support
