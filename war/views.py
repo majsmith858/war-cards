@@ -15,6 +15,7 @@ def generate_deck(request):
     
     :param request: The request object
     """
+    remove_player_score(0)
     player_1_cards = get_new_deck()
     player_2_cards = get_new_deck()
     
@@ -84,6 +85,16 @@ def get_winner(players,score=0):
             winner ={'Winner':player.identity, 'Score':player.score}
     return winner
 
+def create_player(identity):
+    player, created = Player.objects.get_or_create(
+    name='John Brown',
+    identity=identity,
+    defaults={'score': 0},
+    )
+    if created:
+        player.save()
+    return player
+    
 def play_game(request, player_1_deck, player_2_deck):
     """
     It takes in a request and two decks of cards and plays a game of war.
@@ -96,19 +107,8 @@ def play_game(request, player_1_deck, player_2_deck):
     game_over=False
     
     # Creating a player object if it does not exist.
-    player1, created = Player.objects.get_or_create(
-    name='John Brown',
-    identity='Player 1',
-    defaults={'score': 0},
-    )
-    player2, created = Player.objects.get_or_create(
-    name='Jane Black',
-    identity='Player 2',
-    defaults={'score': 0},
-    )
-    
-    player1.save()
-    player2.save()
+    player1 = create_player('Player 1')
+    player2 = create_player('Player 2')
     
     players = list([player1,player2])
         
@@ -127,15 +127,19 @@ def play_game(request, player_1_deck, player_2_deck):
         
     return render(request, template_name, context=context)
 
+def remove_player_score(score):
+    players = Player.objects.all()
+    for player in players:
+        player.score = score
+        player.save()
+    return True
+
 def clear_score(request,game_mode):
     """
     It clears the score of the players when the game is over.
     
     :param request: The request object
     """
-    players = Player.objects.all()
-    for player in players:
-        player.score = 0
-        player.save()
+    remove_player_score(0)
     if game_mode=='game-over':
         return HttpResponseRedirect(reverse("shuffle-deck"))
