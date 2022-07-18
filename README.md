@@ -15,6 +15,8 @@ $ cd war-cards
 # Install dependencies
 $ pip install -r requirements.txt
 
+# Migrate the table
+$ python3 manage.py makemigrations
 # Run the app
 $ python3 manage.py runserver
 ```
