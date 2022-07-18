@@ -15,7 +15,7 @@ def generate_deck(request):
     
     :param request: The request object
     """
-    clear_score(request) #reset scores
+    clear_score(request,'new-game') #reset scores
     player_1_cards = get_new_deck()
     player_2_cards = get_new_deck()
     
@@ -95,7 +95,23 @@ def play_game(request, player_1_deck, player_2_deck):
     """
     template_name='war/play.html'
     game_over=False
-    players = Player.objects.all()
+    
+    # Creating a player object if it does not exist.
+    player1, created = Player.objects.get_or_create(
+    name='John Brown',
+    identity='Player 1',
+    defaults={'score': 0},
+    )
+    player2, created = Player.objects.get_or_create(
+    name='Jane Black',
+    identity='Player 2',
+    defaults={'score': 0},
+    )
+    
+    player1.save()
+    player2.save()
+    
+    players = list([player1,player2])
         
     player_1_draw = draw_card(player_1_deck)
     player_2_draw = draw_card(player_2_deck)
@@ -112,7 +128,7 @@ def play_game(request, player_1_deck, player_2_deck):
         
     return render(request, template_name, context=context)
 
-def clear_score(request):
+def clear_score(request,game_mode):
     """
     It clears the score of the players when the game is over.
     
@@ -122,4 +138,5 @@ def clear_score(request):
     for player in players:
         player.score = 0
         player.save()
-    return HttpResponseRedirect(reverse("shuffle-deck"))
+    if game_mode=='game-over':
+        return HttpResponseRedirect(reverse("shuffle-deck"))

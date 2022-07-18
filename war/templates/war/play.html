@@ -25,7 +25,7 @@
                 {%for key, value in winner.items %}
                     <h4> {{key}} : {{value}} </h4>
                 {%endfor%}
-                <a href="{% url 'clear-score'%}" class='mr-2 mb-4 mt-4'> <button type="button" class="btn btn-primary">Start Over</button> </a>
+                <a href="{% url 'clear-score' 'game-over' %}" class='mr-2 mb-4 mt-4'> <button type="button" class="btn btn-primary">Start Over</button> </a>
             {% endif %}
             
             {% if not game_over %}

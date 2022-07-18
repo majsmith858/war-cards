@@ -8,5 +8,5 @@ urlpatterns = [
     path('shuffle-deck/', generate_deck, name='shuffle-deck'),
     path('play/<str:player_1_deck>/<str:player_2_deck>/', play_game, name='play-game'),
     path('calculate-score/<str:player_1_deck>/<str:player_2_deck>/<str:player_1_card>/<str:player_2_card>/', calculate_score, name='cal-score'),
-    path('clear-score/', clear_score, name='clear-score')
+    path('clear-score/<str:game_mode>', clear_score, name='clear-score')
 ]
