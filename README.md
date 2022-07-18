@@ -20,7 +20,9 @@ $ python3 manage.py makemigrations
 # Run the app
 $ python3 manage.py runserver
 ```
+## Visit the following link
 
+[INDEX](http://127.0.0.1:8000/war/)
 ## Credits
 -TBD
 ## Support
