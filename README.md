@@ -1,5 +1,5 @@
 # war-cards
-The project implements one round of the card game War using the API found at deckofcardsapi.com. 
+The project implements one round of the card game War using the API found at deckofcardsapi.com. This project was written in django 4.0 to demonstrate api calls from an external source
 
 ## How To Use
 
